@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import CanvasSequence from "@/components/CanvasSequence";
 import StorySections from "@/components/StorySections";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         provides fixed text overlays matching the scroll beats.
       */}
       <StorySections />
+      <ContactSection />
     </main>
   );
 }

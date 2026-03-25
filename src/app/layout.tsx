@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sony WH-1000XM6",
-  description: "Silence, perfected. The flagship noise cancelling headphones.",
+  title: "Siddho Mal Group | Global Business & Investments",
+  description: "A New Delhi-based diversified business conglomerate with a rich heritage spanning over 75 years. Excellence across key global industries.",
 };
 
 export default function RootLayout({

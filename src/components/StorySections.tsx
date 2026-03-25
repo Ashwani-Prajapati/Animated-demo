@@ -10,136 +10,162 @@ export default function StorySections() {
     offset: ["start start", "end end"],
   });
 
-  // Calculate opacities and translations based on the scroll progress (0 to 1)
-  
-  // Hero (0 - 15%)
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.05, 0.12, 0.15], [1, 1, 0, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
+  // 1. Hero (0 - 8%)
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.03, 0.08], [1, 1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.08], [0, -100]);
+  const heroDisplay = useTransform(heroOpacity, (v) => (v > 0 ? "flex" : "none"));
 
-  // Engineering Reveal (15% - 40%)
-  const engOpacity = useTransform(scrollYProgress, [0.15, 0.20, 0.35, 0.40], [0, 1, 1, 0]);
-  const engX = useTransform(scrollYProgress, [0.15, 0.20, 0.35, 0.40], [-50, 0, 0, -50]);
+  // GAP: 8% - 15% 
 
-  // Noise Cancelling (40% - 65%)
-  const ncOpacity = useTransform(scrollYProgress, [0.40, 0.45, 0.60, 0.65], [0, 1, 1, 0]);
-  const ncX = useTransform(scrollYProgress, [0.40, 0.45, 0.60, 0.65], [50, 0, 0, 50]);
+  // 2. Group History (15% - 35%)
+  const engOpacity = useTransform(scrollYProgress, [0.15, 0.20, 0.30, 0.35], [0, 1, 1, 0]);
+  const engY = useTransform(scrollYProgress, [0.15, 0.20, 0.30, 0.35], [100, 0, 0, -100]);
+  const engDisplay = useTransform(engOpacity, (v) => (v > 0 ? "flex" : "none"));
 
-  // Sound Quality (65% - 85%)
+  // GAP: 35% - 40%
+
+  // 3. Core Businesses (40% - 60%)
+  const ncOpacity = useTransform(scrollYProgress, [0.40, 0.45, 0.55, 0.60], [0, 1, 1, 0]);
+  const ncY = useTransform(scrollYProgress, [0.40, 0.45, 0.55, 0.60], [100, 0, 0, -100]);
+  const ncDisplay = useTransform(ncOpacity, (v) => (v > 0 ? "flex" : "none"));
+
+  // GAP: 60% - 65%
+
+  // 4. Vision & Operations (65% - 85%)
   const soundOpacity = useTransform(scrollYProgress, [0.65, 0.70, 0.80, 0.85], [0, 1, 1, 0]);
-  const soundY = useTransform(scrollYProgress, [0.65, 0.70, 0.80, 0.85], [50, 0, 0, -50]);
+  const soundY = useTransform(scrollYProgress, [0.65, 0.70, 0.80, 0.85], [100, 0, 0, -100]);
+  const soundDisplay = useTransform(soundOpacity, (v) => (v > 0 ? "flex" : "none"));
 
-  // Reassembly & CTA (85% - 100%)
-  const ctaOpacity = useTransform(scrollYProgress, [0.85, 0.90, 1], [0, 1, 1]);
-  const ctaY = useTransform(scrollYProgress, [0.85, 0.90, 1], [50, 0, 0]);
+  // GAP: 85% - 90%
+
+  // 5. CTA (90% - 100%)
+  const ctaOpacity = useTransform(scrollYProgress, [0.90, 0.95, 1], [0, 1, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.90, 0.95, 1], [100, 0, 0]);
+  const ctaDisplay = useTransform(ctaOpacity, (v) => (v > 0 ? "flex" : "none"));
 
   return (
-    <div ref={containerRef} className="relative z-10 w-full" style={{ height: "500vh" }}>
+    <div ref={containerRef} className="relative z-10 w-full" style={{ height: "700vh" }}>
+      {/* Invisible Anchor Targets accurately mapped to the new 700vh scale percentages */}
+      <div id="about" className="absolute w-full h-[1px] invisible" style={{ top: "0%" }} />
+      <div id="history" className="absolute w-full h-[1px] invisible" style={{ top: "23%" }} />
+      <div id="businesses" className="absolute w-full h-[1px] invisible" style={{ top: "45%" }} />
+      <div id="leadership" className="absolute w-full h-[1px] invisible" style={{ top: "67%" }} />
+      <div id="cta" className="absolute w-full h-[1px] invisible" style={{ top: "89%" }} />
+
       {/* 
         We use a sticky pointer-events-none container to overlay text exactly over the 
-        viewport while the user scrolls through the 500vh height.
+        viewport while the user scrolls through the 700vh height.
       */}
       <div className="sticky top-0 left-0 w-full h-screen pointer-events-none flex flex-col justify-center items-center overflow-hidden">
         
         {/* Section 1: Hero */}
         <motion.div 
-          style={{ opacity: heroOpacity, y: heroY }}
+          style={{ opacity: heroOpacity, y: heroY, display: heroDisplay }}
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 mb-4 drop-shadow-2xl">
-            Sony WH‑1000XM6
-          </h1>
-          <p className="text-xl md:text-3xl text-white/90 font-medium mb-3">
-            Silence, perfected.
-          </p>
-          <p className="text-sm md:text-base text-white/60 max-w-md mx-auto">
-            Flagship wireless noise cancelling, <br className="hidden md:block"/>re‑engineered for a world that never stops.
-          </p>
+          <div className="pointer-events-auto p-4 sm:p-8 rounded-3xl bg-black/40 backdrop-blur-sm border border-white/10 shadow-2xl max-w-4xl w-full mx-auto">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-[#F59E0B] to-[#D97706] mb-4 drop-shadow-2xl uppercase">
+              Siddho Mal Group
+            </h1>
+            <p className="text-lg md:text-3xl text-[#F59E0B] font-semibold mb-4 tracking-wide uppercase">
+              A Legacy of Trust & Excellence.
+            </p>
+            <p className="text-sm md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+              A New Delhi-based diversified business conglomerate with a rich heritage spanning over 75 years, redefining excellence across key global industries.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Section 2: Engineering Reveal */}
+        {/* Section 2: Group History */}
         <motion.div 
-          style={{ opacity: engOpacity, x: engX }}
-          className="absolute inset-0 flex flex-col justify-center items-start px-8 md:px-24 max-w-7xl mx-auto w-full"
+          style={{ opacity: engOpacity, y: engY, display: engDisplay }}
+          className="absolute inset-0 flex flex-col justify-center items-start px-4 md:px-24 max-w-7xl mx-auto w-full"
         >
-          <div className="max-w-md pointer-events-auto">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-[#00D6FF]/80 mb-6 drop-shadow-lg">
-              Precision-engineered for silence.
+          <div className="pointer-events-auto max-w-xl p-6 md:p-10 rounded-3xl bg-[#0a1128]/80 backdrop-blur-xl border border-[#2563EB]/40 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-[#3B82F6] mb-6 drop-shadow-lg">
+              Three Generations of Leadership.
             </h2>
-            <div className="space-y-6 text-white/60 text-lg md:text-xl leading-relaxed">
+            <div className="space-y-6 text-white/90 text-base md:text-xl leading-relaxed">
               <p>
-                Custom drivers, sealed acoustic chambers, and optimized airflow deliver studio-grade clarity.
+                Founded before 1935 by Late Mr. Siddho Mal Jain and advanced by his eldest son, Late Mr. Lalit Kumar Jain.
               </p>
               <p>
-                Every component is tuned for balance, power, and comfort—hour after hour.
+                Today, the group is headed by Mr. Subodh Kumar Jain, boasting over 40 years of international business acumen and forging robust partnerships with leading global entities.
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Section 3: Noise Cancelling & Microphones */}
+        {/* Section 3: Core Businesses */}
         <motion.div 
-          style={{ opacity: ncOpacity, x: ncX }}
-          className="absolute inset-0 flex flex-col justify-center items-end px-8 md:px-24 max-w-7xl mx-auto w-full"
+          style={{ opacity: ncOpacity, y: ncY, display: ncDisplay }}
+          className="absolute inset-0 flex flex-col justify-center items-end px-4 md:px-24 max-w-7xl mx-auto w-full"
         >
-          <div className="max-w-md text-right pointer-events-auto">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-[#0050FF]/80 mb-6 drop-shadow-lg">
-              Adaptive noise cancelling, redefined.
+          <div className="pointer-events-auto max-w-xl text-left md:text-right p-6 md:p-10 rounded-3xl bg-[#050505]/95 backdrop-blur-xl border border-[#F59E0B]/30 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#FCD34D] to-[#F59E0B] mb-6 drop-shadow-lg">
+              Diversified Strategic Interests.
             </h2>
-            <ul className="space-y-4 text-white/60 text-lg md:text-xl leading-relaxed list-none">
-              <li>Multi-microphone array listens in every direction.</li>
-              <li>Real-time noise analysis adjusts to your environment.</li>
-              <li>Your music stays pure—planes, trains, and crowds fade away.</li>
+            <ul className="space-y-4 text-white/90 text-base md:text-xl leading-relaxed list-none">
+              <li className="flex items-start md:items-center justify-start md:justify-end gap-3"><span className="min-w-2 min-h-2 mt-2 md:mt-0 rounded-full bg-[#F59E0B]"></span> SAGE Undersea Gas Pipeline Project (MEIDP)</li>
+              <li className="flex items-start md:items-center justify-start md:justify-end gap-3"><span className="min-w-2 min-h-2 mt-2 md:mt-0 rounded-full bg-[#F59E0B]"></span> Industrial Gases: Inox Air Products</li>
+              <li className="flex items-start md:items-center justify-start md:justify-end gap-3"><span className="min-w-2 min-h-2 mt-2 md:mt-0 rounded-full bg-[#F59E0B]"></span> Investment & Private Equity</li>
+              <li className="flex items-start md:items-center justify-start md:justify-end gap-3"><span className="min-w-2 min-h-2 mt-2 md:mt-0 rounded-full bg-[#F59E0B]"></span> Advanced Smart Metering Solutions</li>
             </ul>
           </div>
         </motion.div>
 
-        {/* Section 4: Sound & Upscaling */}
+        {/* Section 4: Vision & Global Operations */}
         <motion.div 
-          style={{ opacity: soundOpacity, y: soundY }}
+          style={{ opacity: soundOpacity, y: soundY, display: soundDisplay }}
           className="absolute inset-0 flex flex-col justify-end pb-32 items-center text-center px-4 md:px-24 mx-auto w-full"
         >
-          <div className="max-w-2xl pointer-events-auto p-8 rounded-3xl bg-black/20 backdrop-blur-md border border-white/5">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-6 drop-shadow-lg">
-              Immersive, lifelike sound.
+          <div className="pointer-events-auto max-w-3xl p-6 md:p-10 rounded-3xl bg-gradient-to-t from-black via-[#0a1128]/95 to-transparent backdrop-blur-xl border border-[#2563EB]/30 shadow-[0_10px_50px_rgba(0,0,0,0.9)] transition-all duration-500">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white mb-6 drop-shadow-lg">
+              A Global Corporate Footprint.
             </h2>
-            <div className="space-y-4 text-white/70 text-lg md:text-xl leading-relaxed">
-              <p>High-performance drivers unlock detail, depth, and texture in every track.</p>
-              <p>AI-enhanced upscaling restores clarity to compressed audio, so every note feels alive.</p>
+            <div className="space-y-4 text-white/90 text-base md:text-xl leading-relaxed">
+              <p>With impeccable credentials over 4 decades, Siddho Mal Group continues to structure landmark deals and pioneer ventures across international borders.</p>
+              <p>Our commitment to excellence translates into enduring partnerships and sustainable infrastructures.</p>
             </div>
           </div>
         </motion.div>
 
         {/* Section 5: Reassembly & CTA */}
         <motion.div 
-          style={{ opacity: ctaOpacity, y: ctaY }}
-          className="absolute inset-0 flex flex-col items-center justify-end pb-24 text-center px-4"
+          style={{ opacity: ctaOpacity, y: ctaY, display: ctaDisplay }}
+          className="absolute inset-0 flex flex-col items-center justify-end pb-12 md:pb-24 text-center px-4"
         >
-          <div className="pointer-events-auto flex flex-col items-center">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4 drop-shadow-2xl">
-              Hear everything.<br/>
-              <span className="text-white/40">Feel nothing else.</span>
+          <div className="pointer-events-auto w-full max-w-4xl flex flex-col items-center p-8 md:p-12 bg-[#050505]/95 backdrop-blur-2xl rounded-[2rem] border border-[#F59E0B]/40 shadow-[0_0_60px_rgba(245,158,11,0.15)]">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-[#F59E0B] mb-4 drop-shadow-2xl leading-tight">
+              Partner With A Legacy.<br/>
+              <span className="text-white/80 font-semibold text-xl md:text-4xl mt-2 block">Drive the future of industry.</span>
             </h2>
-            <p className="text-lg text-white/60 mb-8">
-              WH‑1000XM6. Designed for focus, crafted for comfort.
+            <p className="text-base md:text-lg text-white/80 mb-8 md:mb-10 max-w-xl mx-auto">
+              Committed to corporate social responsibility, we build today for a better, sustainable tomorrow across India and the globe.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
               <a 
-                href="#buy" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-white transition-all duration-300 bg-[#0050FF] rounded-full hover:bg-[#0050FF]/80 overflow-hidden"
+                href="#contact" 
+                className="group w-full sm:w-auto relative inline-flex items-center justify-center px-8 md:px-10 py-4 text-sm font-bold text-white uppercase tracking-wider transition-all duration-300 bg-[#2563EB] rounded-full hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] overflow-hidden scale-100 hover:scale-105"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
                 <span className="relative z-10 flex items-center gap-2">
-                  Experience WH‑1000XM6
+                  Contact Us Today
                 </span>
               </a>
-              <a href="#specs" className="text-sm font-medium text-white/60 hover:text-white transition-colors underline-offset-4 hover:underline">
-                See full specs
+              <a href="#businesses" className="group w-full sm:w-auto inline-flex items-center justify-center px-8 md:px-10 py-4 rounded-full border border-white/20 text-sm font-bold tracking-wide text-white hover:bg-white/10 transition-all uppercase">
+                Explore Businesses
               </a>
             </div>
-            <p className="mt-8 text-xs text-white/40 max-w-xs">
-              Engineered for airports, offices, and everything in between.
-            </p>
+            
+            <div className="mt-10 flex flex-wrap gap-4 md:gap-8 items-center justify-center text-xs md:text-sm text-white/60 font-medium">
+              <p>A-6, Connaught Place, New Delhi</p>
+              <div className="hidden md:block w-1.5 h-1.5 bg-[#F59E0B] rounded-full"></div>
+              <p>info@siddhomalgroup.com</p>
+              <div className="hidden md:block w-1.5 h-1.5 bg-[#F59E0B] rounded-full"></div>
+              <p>+91-11-23324245</p>
+            </div>
           </div>
         </motion.div>
 

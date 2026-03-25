@@ -32,18 +32,18 @@ export default function Navbar() {
     >
       {/* Left: Logo / Branding */}
       <div className="flex items-center">
-        <Link href="/" className="font-semibold text-white/90 tracking-tight text-lg">
-          WH‑1000XM6
+        <Link href="/" className="font-bold text-white tracking-tight text-xl uppercase">
+          Siddho Mal Group
         </Link>
       </div>
 
       {/* Center: Navigation Links (Desktop) */}
       <div className="hidden md:flex items-center space-x-8">
-        {["Overview", "Technology", "Noise Cancelling", "Specs"].map((item) => (
+        {["About", "History", "Businesses", "Leadership", "Contact"].map((item) => (
           <Link
             key={item}
-            href={`#${item.toLowerCase().replace(" ", "-")}`}
-            className="text-[13px] font-medium text-white/70 hover:text-white transition-colors duration-200"
+            href={`#${item.toLowerCase()}`}
+            className="text-[14px] font-semibold text-white/80 hover:text-[#F59E0B] transition-colors duration-200"
           >
             {item}
           </Link>
@@ -51,13 +51,13 @@ export default function Navbar() {
       </div>
 
       {/* Right: CTA Button */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 pointer-events-auto">
         <Link
-          href="#buy"
-          className="group relative inline-flex items-center justify-center px-4 py-1.5 text-xs font-medium text-white transition-all duration-200 bg-white/10 rounded-full hover:bg-white/20 border border-white/10 hover:border-white/30"
+          href="#contact"
+          className="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 bg-[#2563EB] rounded-full shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.8)] hover:bg-[#1D4ED8] scale-100 hover:scale-105"
         >
-          <span className="relative z-10 flex items-center gap-1">
-            Experience <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+          <span className="relative z-10 flex items-center gap-2 tracking-wide">
+            Explore <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </span>
         </Link>
       </div>
